@@ -76,7 +76,7 @@ public class DAOImpClienteBD implements DAOCliente {
 	}
 
 	public void actualizar (Cliente cliente) {
-		String sql = "UPDATE albaran SET Nombre = ? , Direccion = ? WHERE Dni = ?";
+		String sql = "UPDATE Cliente SET Nombre = ? , Direccion = ? WHERE Dni = ?";
     try{
       PreparedStatement pstmt = con.prepareStatement(sql);
       pstmt.setString(1, producto.getNombre());
