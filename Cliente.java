@@ -7,6 +7,12 @@ public class Cliente {
 
 	}
 
+	public Cliente(String nombre, String dni, String direccion) {
+		this.nombre = nombre;
+		this.dni = dni;
+		this.direccion = direccion;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -24,10 +30,27 @@ public class Cliente {
 	}
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
-	}
-	@Override
+
+
+	@ Override
 	public String toString() {
-	 String cadena = "Cliente: "+nombre+" "+dni+" "+direccion;
-	 return cadena;
-	 }
+		return "Cliente: "+nombre+" "+dni+" "+direccion;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+      if (o == null) return false;
+      if (o == this) return true;
+      if (!(o instanceof Cliente)){
+        return false;
+      }
+      Cliente cliente = (Cliente) o;
+      if(nombre.equals(dni.equals(cliente.getDni()))) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
 }
