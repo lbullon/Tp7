@@ -111,7 +111,8 @@ public class DAOCompraTxt implements DAOCompra{
 					String [] lista1 = linea.split("/");
 					
 					String [] lista = lista1[0].split(":");
-					String [] listaF = lista1[1].split(":");
+					String lista2 = lista1[1];
+					String [] listaF = lista2.split(":");
 					
 				
 					int n = Integer.parseInt(lista[0]);
@@ -127,34 +128,41 @@ public class DAOCompraTxt implements DAOCompra{
 						}
 						compra.setFecha(date);
 						cliente.setDni(lista[2]);
-						//cliente.setDireccion(direccion(cliente.getDni()));
-						System.out.println(direccion(cliente.getDni()));
+						cliente.setDireccion(direccion(cliente.getDni()));
+						
+						cliente.setNombre(nombre(cliente.getDni()));
 						compra.setCliente(cliente);
-					}
-				}
-        	}
+			
 	
-					    /*int pasadas = listaF.length;
-						System.out.println(pasadas);
+					    int pasadas = listaF.length;
+					
 						int i = 0;
 						
 						while(i < pasadas-1) {
-							listaF = listaF[i].split(":");
-							System.out.println(listaF[0]);
-						i++;
+							
+													   
 						
-						producto.setSku(Integer.parseInt(listaF[0]));
-						producto.setName(listaF[1]);
-						producto.setCantidad(Integer.parseInt(lista[2]));
+						producto.setSku(Integer.parseInt(listaF[0+i]));
+						System.out.println(listaF[1+i]);
+						
+						producto.setName(NombreP(String.valueOf(producto.getSku())));
 						producto.setPrecio(precio(producto.getName()));
+						producto.setCantidad(Double.parseDouble(listaF[1+i]));
+									
 						comprado.put(producto, (producto.getCantidad()*producto.getPrecio()));
+						i = i + 2;
+						}
+						compra.setComprado(comprado);
+					}
+				}
+        	}
 						
 						
 										
 						
-						} }	
+						
 					
-				}*/
+				
 			
 					catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -257,5 +265,92 @@ public class DAOCompraTxt implements DAOCompra{
 	
 	
 	return direccion;
+}
+	public String sku (String nombre) {
+		
+		String sku = null;
+		try { 
+		 	File fileP = new File("productos.txt");
+        	FileReader reader = new FileReader(fileP);
+        	BufferedReader read = new BufferedReader(reader);
+        	String linea;
+        	
+        	while((linea = read.readLine())!=null) {
+        		String [] list = linea.split(":");
+        		;
+        		
+        		if (list[1].equals(nombre)) {
+        			
+        			sku = list[0];
+        			 
+        		}
+        		
+        	}
+        	read.close();	
+        }catch (Exception e) {
+        	
+        }
+	 
+	
+	
+	return sku;
+}
+	public String NombreP (String Sku) {
+		
+		String nombre = null;
+		try { 
+		 	File fileP = new File("productos.txt");
+        	FileReader reader = new FileReader(fileP);
+        	BufferedReader read = new BufferedReader(reader);
+        	String linea;
+        	
+        	while((linea = read.readLine())!=null) {
+        		String [] list = linea.split(":");
+        		;
+        		
+        		if (list[0].equals(Sku)) {
+        			
+        			nombre = list[1];
+        			 
+        		}
+        		
+        	}
+        	read.close();	
+        }catch (Exception e) {
+        	
+        }
+	 
+	
+	
+	return nombre;
+}
+public String Precio (String Nombre) {
+		
+		String nombre = null;
+		try { 
+		 	File fileP = new File("productos.txt");
+        	FileReader reader = new FileReader(fileP);
+        	BufferedReader read = new BufferedReader(reader);
+        	String linea;
+        	
+        	while((linea = read.readLine())!=null) {
+        		String [] list = linea.split(":");
+        		;
+        		
+        		if (list[1].equals(Nombre)) {
+        			
+        			nombre = list[2];
+        			 
+        		}
+        		
+        	}
+        	read.close();	
+        }catch (Exception e) {
+        	
+        }
+	 
+	
+	
+	return nombre;
 }
 }
