@@ -4,9 +4,7 @@ import java.util.Date;
 
 public class Compra {
   private Cliente cliente;
-
   private Map<Producto,Double> comprado;
-  private int cant;
   private int numFac;
   private Date fecha;
 
@@ -23,15 +21,8 @@ public class Compra {
     this.comprado = comprado;
     this.numFac = numFac;
     fecha = new java.util.Date();
+  }  
 
-  public void setCliente(Cliente cliente) {
-    this.cliente = cliente;
-  }
-
-  public Cliente getCliente() {
-    return cliente;
-
-  }
 
   public Compra(Cliente cliente,Map<Producto,Double> comprado,int numFac, Date fecha) {
     this.cliente = cliente;

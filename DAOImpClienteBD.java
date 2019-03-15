@@ -21,30 +21,29 @@ public class DAOImpClienteBD implements DAOCliente {
     }
 	}
 
-	public void alta (Cliente cliente) {
-		String sql = "INSERT INTO cliente(Name,Dni,Direccion) VALUES(?,?,?)";
-    try{
-      PreparedStatement pstmt = con.prepareStatement(sql);
-      pstmt.setString(1, cliente.getName());
-      pstmt.setString(2, producto.getDni());
-      pstmt.setString(3, producto.getDireccion());
-      pstmt.executeUpdate();
-      System.out.println("Insertado en la DB ");
-    } catch (SQLException e) {
-      System.out.println("***" + e.getMessage() + "***");
-    }
+	public void grabar (Cliente cliente) {
+		List<Cliente> clientes = null;
+		Scanner sc = new Scanner(System.in);
+		clientes = leerTodos();
+		if (!clientes.contains(cliente)){
+			System.out.print("Nombre: ");
+			cliente.setNombre(sc.nextLine());
+			System.out.print("Direccion: ");
+			cliente.setDireccion(sc.nextLine());
+			String sql = "INSERT INTO cliente(Nombre,Dni,Direccion) VALUES(?,?,?)";
+	   		try{
+	   			PreparedStatement pstmt = con.prepareStatement(sql);
+      			pstmt.setString(1, cliente.getNombre());
+       			pstmt.setString(2, cliente.getDni());
+	      		pstmt.setString(3, cliente.getDireccion());
+	      		pstmt.executeUpdate();
+	      		System.out.println("Insertado cliente en la DB ");
+	   		} catch (SQLException e) {
+	     		System.out.println("***" + e.getMessage() + "***");
+	   		}
+	   	}	  	   
 	}
-	public void baja (Cliente cliente) {
-		String sql = "DELETE FROM cliente where Dni = ?";
-		try{
-      PreparedStatement pstmt = con.prepareStatement(sql);
-      pstmt.setString(1, cliente.getDni());
-      pstmt.executeUpdate();
-      System.out.println("Eliminado de la DB ");
-    } catch (SQLException e) {
-      System.out.println("***" + e.getMessage() + "***");
-    }
-	}
+
 	public Cliente leer (String dni) {
 		Cliente cliente = null;
 		String sql = "SELECT Nombre, Dni, Direccion FROM cliente WHERE Dni LIKE '"+dni+"'";
@@ -71,67 +70,9 @@ public class DAOImpClienteBD implements DAOCliente {
         }
       } catch (SQLException e) {
         System.out.println(e.getMessage());
-      }
-    return albaran;
+      }  
+    return clientes;
 	}
-
-	public void actualizar (Cliente cliente) {
-		String sql = "UPDATE Cliente SET Nombre = ? , Direccion = ? WHERE Dni = ?";
-    try{
-      PreparedStatement pstmt = con.prepareStatement(sql);
-      pstmt.setString(1, producto.getNombre());
-      pstmt.setString(2, producto.getDireccion());
-      pstmt.setString(3, producto.getDni());
-      pstmt.executeUpdate();
-      System.out.println("Actualizada DB ");
-    } catch (SQLException e) {
-    	System.out.println("***" + e.getMessage() + "***");
-    }
-	}
-
-	public boolean existe (Cliente cliente) {
-		String condicion;
-		List<Cliente> clientes = new ArrayList<Cliente>();
-		Scanner sc = new Scanner(System.in);
-		DAOImpClienteBD dc = new DAOImpClienteBD();
-		clientes = dc.leerTodos();
-		for (Cliente c: clientes) {
-			if (c.equals(cliente)) {
-				if (c.getNombre() =! cliente.getNombre() || c.getDireccion() =! cliente.getDireccion()){
-					System.out.println("¿Ha introducido bien el dni? S/N");
-					condicion = sc.nextLine();
-					if (condicion == "s" || condicion == "S"){
-						if (c.getNombre() =! cliente.getNombre()){
-							System.out.println("Nombre diferente, ¿desea cambiarlo? S/N");
-							condicion = sc.nextLine();
-							if (condicion == "s" || condicion == "S"){
-								c.setNombre(cliente.getNombre());
-								dc.actualizar(c);
-							}
-						}
-						if (c.getDireccion() =! cliente.getDireccion()){
-							System.out.println("Direccion diferente, ¿desea cambiarlo? S/N");
-							condicion = sc.nextLine();
-							if (condicion == "s" || condicion == "S"){
-								c.setDireccion(cliente.getDireccion());
-								dc.actualizar(c);
-							}
-						}	
-					} else {
-						System.out.println("Escriba su dni correctamente");
-						cliente.setDni(sc.nextLine());
-						dc.existe(cliente);
-						dc.cerrar();
-					}
-				}
-				dc.cerrar();	
-				return true;
-			}
-		}
-		dc.cerrar();
-		return false;
-	}
-
 
 	public void cerrar() {
     try {

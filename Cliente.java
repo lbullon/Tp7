@@ -30,7 +30,7 @@ public class Cliente {
 	}
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
-
+	}
 
 	@ Override
 	public String toString() {
@@ -45,7 +45,7 @@ public class Cliente {
         return false;
       }
       Cliente cliente = (Cliente) o;
-      if(nombre.equals(dni.equals(cliente.getDni()))) {
+      if(dni.equals(cliente.getDni())) {
         return true;
       }
       else {

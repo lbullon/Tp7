@@ -1,7 +1,6 @@
 public interface DAOCompra {
 	void grabar (Compra compra);
-	Compra ticket (String dni,int numFac);
-	List<Compra> allTicketCliente (Cliente cliente);
-	List<Compra> allTicket ();
+	int enumerar();
+	Compra ticket (int numFac);
 	void cerrar();
 }
