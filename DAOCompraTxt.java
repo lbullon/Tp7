@@ -149,10 +149,7 @@ public class DAOCompraTxt implements DAOCompra{
 						producto.setPrecio(precio(producto.getName()));
 						producto.setCantidad(Double.parseDouble(listaF[1+i]));
 									
-						comprado.put(producto, (producto.getCantidad()*producto.getPrecio()));
-						i = i + 2;
-						}
-						compra.setComprado(comprado);
+						comprado.put(producto, producto.getCantidad());
 					}
 				}
         	}
